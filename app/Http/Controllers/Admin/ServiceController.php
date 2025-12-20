@@ -26,21 +26,39 @@ class ServiceController extends Controller
             'short_description' => ['nullable', 'string'],
             'long_description' => ['nullable', 'string'],
             'image' => ['nullable', 'image'],
+            'image_url' => ['nullable', 'string'], // Allow image_url from gallery
             'meta_title' => ['nullable', 'string', 'max:255'],
             'meta_description' => ['nullable', 'string', 'max:255'],
             'is_active' => ['nullable', 'boolean'],
+            'gallery_ids' => ['nullable', 'array'],
+            'gallery_ids.*' => ['exists:galleries,id'],
         ]);
+
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('uploads/services', 'public');
             $this->compressImage(storage_path('app/public/'.$path));
             $data['image'] = '/storage/' . $path;
+        } elseif ($request->filled('image_url')) {
+            $data['image'] = $request->input('image_url');
         }
-        Service::create($data);
+
+        unset($data['image_url']); // Remove auxiliary field
+        
+        $galleryIds = $data['gallery_ids'] ?? [];
+        unset($data['gallery_ids']);
+
+        $service = Service::create($data);
+        
+        if (!empty($galleryIds)) {
+            $service->galleries()->sync($galleryIds);
+        }
+
         return redirect()->route('admin.services.index');
     }
 
     public function edit(Service $service)
     {
+        $service->load('galleries');
         return view('admin.services.edit', compact('service'));
     }
 
@@ -51,16 +69,31 @@ class ServiceController extends Controller
             'short_description' => ['nullable', 'string'],
             'long_description' => ['nullable', 'string'],
             'image' => ['nullable', 'image'],
+            'image_url' => ['nullable', 'string'], // Allow image_url from gallery
             'meta_title' => ['nullable', 'string', 'max:255'],
             'meta_description' => ['nullable', 'string', 'max:255'],
             'is_active' => ['nullable', 'boolean'],
+            'gallery_ids' => ['nullable', 'array'],
+            'gallery_ids.*' => ['exists:galleries,id'],
         ]);
+
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('uploads/services', 'public');
             $this->compressImage(storage_path('app/public/'.$path));
             $data['image'] = '/storage/' . $path;
+        } elseif ($request->filled('image_url')) {
+            $data['image'] = $request->input('image_url');
         }
+
+        unset($data['image_url']); // Remove auxiliary field
+        
+        $galleryIds = $data['gallery_ids'] ?? [];
+        unset($data['gallery_ids']);
+
         $service->update($data);
+        
+        $service->galleries()->sync($galleryIds);
+
         return redirect()->route('admin.services.index');
     }
 

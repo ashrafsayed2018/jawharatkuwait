@@ -10,6 +10,7 @@
         <button class="w-full px-5 py-3 bg-green-600 hover:bg-green-700 text-white rounded">إرسال عبر واتساب</button>
     </form>
     <div class="mt-4 text-center">
-        <a href="https://wa.me/{{ $siteSettings->whatsapp_number ?? '96550850173' }}" class="underline" target="_blank">واتساب مباشر</a>
+        @php($whatsapp = $siteSettings->whatsapp_number ?? '50850173')
+        <a href="https://wa.me/{{ Str::startsWith($whatsapp, '965') ? $whatsapp : '965'.$whatsapp }}" class="underline" target="_blank">واتساب مباشر</a>
     </div>
 </div>

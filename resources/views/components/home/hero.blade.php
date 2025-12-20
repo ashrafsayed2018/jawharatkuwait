@@ -1,5 +1,5 @@
 <section class="relative overflow-hidden lg:h-screen">
-    @php($heroImage = ($siteSettings->logo_path ?? null) ? $siteSettings->logo_path : 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=1600&auto=format&fit=crop')
+    @php($heroImage = ($siteSettings->logo_path ?? null) ? $siteSettings->logo_path : asset('images/جوهرة الكويت خدمة ضيافة رجالي/جوهرة الكويت خدمة ضيافة رجالي.webp'))
     <img src="{{ $heroImage }}" alt="" class="absolute inset-0 w-full h-full object-cover">
     <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/20"></div>
     <div class="container mx-auto px-4 py-20 lg:h-screen relative flex items-center justify-center">

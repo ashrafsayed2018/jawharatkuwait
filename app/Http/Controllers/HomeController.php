@@ -12,8 +12,8 @@ class HomeController extends Controller
     public function index()
     {
         $services = Cache::remember('home_services', 300, fn() => Service::where('is_active', true)->latest()->take(6)->get());
-        $posts = Cache::remember('home_posts', 300, fn() => Post::latest()->take(3)->get());
-        $latestPosts = Cache::remember('home_latest_posts', 300, fn() => Post::latest()->take(15)->get());
+        $posts = Cache::remember('home_posts', 300, fn() => Post::with('gallery')->latest()->take(3)->get());
+        $latestPosts = Cache::remember('home_latest_posts', 300, fn() => Post::with('gallery')->latest()->take(15)->get());
         return view('home.index', compact('services', 'posts', 'latestPosts'));
     }
 

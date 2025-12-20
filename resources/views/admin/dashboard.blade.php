@@ -11,7 +11,9 @@
     <div class="mt-8 flex gap-3">
         <a href="{{ route('admin.services.index') }}" class="px-4 py-2 bg-primary text-white rounded">إدارة الخدمات</a>
         <a href="{{ route('admin.posts.index') }}" class="px-4 py-2 bg-primary text-white rounded">إدارة المقالات</a>
+        <a href="{{ route('admin.tags.index') }}" class="px-4 py-2 bg-primary text-white rounded">إدارة الوسوم</a>
         <a href="{{ route('admin.messages.index') }}" class="px-4 py-2 bg-primary text-white rounded">الرسائل</a>
+        <a href="{{ route('admin.gallery.index') }}" class="px-4 py-2 bg-primary text-white rounded">معرض الصور</a>
         <a href="{{ route('admin.settings.index') }}" class="px-4 py-2 bg-primary text-white rounded">الإعدادات</a>
     </div>
 </div>

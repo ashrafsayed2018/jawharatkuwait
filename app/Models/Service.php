@@ -37,4 +37,14 @@ class Service extends Model
             }
         });
     }
+
+    public function galleries()
+    {
+        return $this->belongsToMany(Gallery::class, 'gallery_service');
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
 }

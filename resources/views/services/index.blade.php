@@ -5,15 +5,7 @@
     <h1 class="text-3xl font-bold">الخدمات</h1>
     <div class="grid md:grid-cols-3 gap-6 mt-6">
         @foreach($services as $service)
-            <a href="{{ route('services.show',$service->slug) }}" class="rounded border overflow-hidden">
-                @if($service->image)
-                    <img src="{{ $service->image }}" class="w-full h-48 object-cover" alt="">
-                @endif
-                <div class="p-4">
-                    <div class="font-semibold">{{ $service->title }}</div>
-                    <div class="text-sm text-gray-600">{{ $service->short_description }}</div>
-                </div>
-            </a>
+            <x-service.card :href="route('services.show',$service->slug)" :title="$service->title" :description="$service->short_description" :image="$service->image" />
         @endforeach
     </div>
     <div class="mt-6">{{ $services->links() }}</div>

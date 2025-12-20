@@ -5,7 +5,7 @@
     <article class="prose rtl:prose-invert max-w-none">
         <h1>{{ $post->title }}</h1>
         @if($post->image)
-            <img src="{{ $post->image }}" class="w-full rounded" alt="">
+            <img src="{{ $post->image }}" class="w-full h-[50vh] md:h-[80vh] object-cover rounded" alt="{{ $post->title }}">
         @endif
         <div class="mt-4">{!! $post->content !!}</div>
         @if($post->tags)
@@ -18,19 +18,3 @@
     </article>
 </div>
 @endsection
-
-@push('head')
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": "{{ $post->title }}",
-  "datePublished": "{{ optional($post->published_at)->toIso8601String() }}",
-  "image": "{{ $post->image }}",
-  "author": {
-    "@type": "Organization",
-    "name": "جوهرة الكويت"
-  }
-}
-</script>
-@endpush

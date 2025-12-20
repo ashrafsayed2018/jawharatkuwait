@@ -11,7 +11,7 @@
                 @endif
                 <div class="p-4">
                     <div class="font-semibold">{{ $post->title }}</div>
-                    <div class="text-sm text-gray-600">{{ Str::limit(strip_tags($post->content), 100) }}</div>
+                    <div class="text-sm text-gray-600">{{ $post->meta_description ?? Str::limit(strip_tags($post->content), 100) }}</div>
                 </div>
             </a>
         @endforeach

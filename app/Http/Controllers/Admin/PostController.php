@@ -4,19 +4,25 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Post;
+use App\Models\Tag;
+use App\Models\Service;
+use App\Models\Gallery;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::latest()->paginate(20);
+        $posts = Post::with(['service', 'gallery'])->latest()->paginate(20);
         return view('admin.posts.index', compact('posts'));
     }
 
     public function create()
     {
-        return view('admin.posts.create');
+        $services = Service::all();
+        $tags = Tag::all();
+        return view('admin.posts.create', compact('services', 'tags'));
     }
 
     public function store(Request $request)
@@ -24,24 +30,40 @@ class PostController extends Controller
         $data = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'content' => ['required', 'string'],
-            'image' => ['nullable', 'image'],
-            'tags' => ['nullable', 'string'],
+            'tags' => ['nullable', 'array'],
+            'tags.*' => ['exists:tags,id'],
+            'service_id' => ['required', 'exists:services,id'],
+            'gallery_id' => ['required', 'exists:galleries,id'],
             'published_at' => ['nullable', 'date'],
             'meta_title' => ['nullable', 'string', 'max:255'],
             'meta_description' => ['nullable', 'string', 'max:255'],
         ]);
-        if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('uploads/posts', 'public');
-            $this->compressImage(storage_path('app/public/'.$path));
-            $data['image'] = '/storage/' . $path;
+
+        if ($request->filled('gallery_id')) {
+            $gallery = Gallery::find($request->gallery_id);
+            if ($gallery) {
+                $data['image'] = $gallery->image_path;
+            }
         }
-        Post::create($data);
-        return redirect()->route('admin.posts.index');
+
+        $post = Post::create($data);
+        
+        if ($request->has('tags')) {
+            $post->relatedTags()->sync($request->tags);
+            // Update JSON column for backward compatibility
+            $post->tags = $post->relatedTags()->pluck('name')->toArray();
+            $post->saveQuietly();
+        }
+
+        return redirect()->route('admin.posts.index')->with('success', 'تم إضافة المقال بنجاح');
     }
 
     public function edit(Post $post)
     {
-        return view('admin.posts.edit', compact('post'));
+        $services = Service::all();
+        $tags = Tag::all();
+        $post->load('relatedTags');
+        return view('admin.posts.edit', compact('post', 'services', 'tags'));
     }
 
     public function update(Request $request, Post $post)
@@ -49,25 +71,39 @@ class PostController extends Controller
         $data = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'content' => ['required', 'string'],
-            'image' => ['nullable', 'image'],
-            'tags' => ['nullable', 'string'],
+            'tags' => ['nullable', 'array'],
+            'tags.*' => ['exists:tags,id'],
+            'service_id' => ['required', 'exists:services,id'],
+            'gallery_id' => ['required', 'exists:galleries,id'],
             'published_at' => ['nullable', 'date'],
             'meta_title' => ['nullable', 'string', 'max:255'],
             'meta_description' => ['nullable', 'string', 'max:255'],
         ]);
-        if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('uploads/posts', 'public');
-            $this->compressImage(storage_path('app/public/'.$path));
-            $data['image'] = '/storage/' . $path;
+
+        if ($request->filled('gallery_id')) {
+            $gallery = Gallery::find($request->gallery_id);
+            if ($gallery) {
+                $data['image'] = $gallery->image_path;
+            }
         }
+
         $post->update($data);
-        return redirect()->route('admin.posts.index');
+
+        if ($request->has('tags')) {
+            $post->relatedTags()->sync($request->tags);
+            // Update JSON column for backward compatibility
+            $post->tags = $post->relatedTags()->pluck('name')->toArray();
+            $post->saveQuietly();
+        }
+
+        return redirect()->route('admin.posts.index')->with('success', 'تم تحديث المقال بنجاح');
     }
 
     public function destroy(Post $post)
     {
+        $post->relatedTags()->detach();
         $post->delete();
-        return redirect()->route('admin.posts.index');
+        return redirect()->route('admin.posts.index')->with('success', 'تم حذف المقال بنجاح');
     }
 
     private function compressImage(string $absolutePath): void

@@ -16,12 +16,42 @@ class Post extends Model
         'published_at',
         'meta_title',
         'meta_description',
+        'service_id',
+        'gallery_id',
     ];
 
     protected $casts = [
         'published_at' => 'datetime',
         'tags' => 'array',
     ];
+
+    public function relatedTags()
+    {
+        return $this->belongsToMany(Tag::class, 'post_tag');
+    }
+
+    public function service()
+    {
+        return $this->belongsTo(Service::class);
+    }
+
+    public function gallery()
+    {
+        return $this->belongsTo(Gallery::class);
+    }
+
+    public function getImageAttribute($value)
+    {
+        if ($this->gallery_id) {
+            return $this->gallery ? $this->gallery->image_url : null;
+        }
+        
+        if ($value) {
+            return str_starts_with($value, 'http') ? $value : asset($value);
+        }
+        
+        return null;
+    }
 
     protected static function boot()
     {

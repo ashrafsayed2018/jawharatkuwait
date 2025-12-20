@@ -16,7 +16,7 @@ class ServiceController extends Controller
 
     public function show($slug)
     {
-        $service = Service::where('slug', $slug)->where('is_active', true)->first();
+        $service = Service::with('galleries')->where('slug', $slug)->where('is_active', true)->first();
         if (!$service) {
             $title = str_replace('-', ' ', $slug);
             $service = new Service([
