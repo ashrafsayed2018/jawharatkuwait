@@ -18,17 +18,35 @@ class ServiceController extends Controller
     {
         $service = Service::with('galleries')->where('slug', $slug)->where('is_active', true)->first();
         if (!$service) {
-            $title = str_replace('-', ' ', $slug);
-            $service = new Service([
-                'title' => $title,
-                'slug' => $slug,
-                'short_description' => 'خدمات ضيافة وتأجير وتجهيز مناسبات',
-                'long_description' => 'تفاصيل الخدمة سيتم تحديثها لاحقاً. لخدمتك الآن يمكنك التواصل عبر واتساب.',
-                'image' => 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=1200&auto=format&fit=crop',
-                'meta_title' => $title,
-                'meta_description' => 'خدمات جوهرة الكويت - ' . $title,
-                'is_active' => true,
-            ]);
+            $fallbackServices = \App\Helpers\ServiceHelper::getFallbackServices();
+            $fallbackService = collect($fallbackServices)->first(function ($item) use ($slug) {
+                return Str::arabicSlug($item['title']) === $slug;
+            });
+
+            if ($fallbackService) {
+                $service = new Service([
+                    'title' => $fallbackService['title'],
+                    'slug' => $slug,
+                    'short_description' => $fallbackService['short_description'],
+                    'long_description' => $fallbackService['long_description'],
+                    'image' => asset($fallbackService['image']),
+                    'meta_title' => $fallbackService['meta_title'],
+                    'meta_description' => $fallbackService['meta_description'],
+                    'is_active' => true,
+                ]);
+            } else {
+                $title = str_replace('-', ' ', $slug);
+                $service = new Service([
+                    'title' => $title,
+                    'slug' => $slug,
+                    'short_description' => 'خدمات ضيافة وتأجير وتجهيز مناسبات',
+                    'long_description' => 'تفاصيل الخدمة سيتم تحديثها لاحقاً. لخدمتك الآن يمكنك التواصل عبر واتساب.',
+                    'image' => 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=1200&auto=format&fit=crop',
+                    'meta_title' => $title,
+                    'meta_description' => 'خدمات جوهرة الكويت - ' . $title,
+                    'is_active' => true,
+                ]);
+            }
         }
         $relatedPosts = \App\Models\Post::where(function ($q) use ($service) {
             $q->where('tags', 'like', '%'.$service->slug.'%')
