@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto px-4 py-24">
+<div class="container mx-auto px-4 py-28">
     <h1 class="text-3xl font-bold">الخدمات</h1>
     
     @if($services->isNotEmpty())

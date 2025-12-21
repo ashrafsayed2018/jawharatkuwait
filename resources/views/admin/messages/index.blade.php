@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto px-4 py-12">
+<div class="container mx-auto px-4 py-28">
     <h1 class="text-2xl font-bold">رسائل التواصل</h1>
     <table class="w-full mt-6 border">
         <thead><tr><th class="p-2 border">الاسم</th><th class="p-2 border">الهاتف</th><th class="p-2 border">نوع الخدمة</th><th class="p-2 border">مقروء؟</th><th class="p-2 border">إجراءات</th></tr></thead>

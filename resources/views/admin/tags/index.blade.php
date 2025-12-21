@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto px-4 py-12">
+<div class="container mx-auto px-4 py-28">
     <div class="flex justify-between items-center mb-6">
         <h1 class="text-2xl font-bold">إدارة الوسوم</h1>
         <button onclick="document.getElementById('createModal').classList.remove('hidden')" class="px-4 py-2 bg-primary text-white rounded">إضافة وسم</button>

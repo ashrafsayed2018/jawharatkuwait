@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto px-4 py-12">
+<div class="container mx-auto px-4 py-28">
     <h1 class="text-2xl font-bold">لوحة التحكم</h1>
     <div class="grid md:grid-cols-3 gap-6 mt-6">
         <div class="p-6 border rounded"><div>الخدمات</div><div class="text-3xl font-bold">{{ $serviceCount }}</div></div>

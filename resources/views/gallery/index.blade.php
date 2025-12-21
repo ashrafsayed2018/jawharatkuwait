@@ -5,7 +5,7 @@
 
 @section('content')
 <div class="bg-gray-50 py-12">
-    <div class="container mx-auto px-4 py-20">
+    <div class="container mx-auto px-4 py-28">
         <div class="text-center mb-12">
             <h1 class="text-4xl font-bold text-gray-900 mb-4">معرض الصور</h1>
             <p class="text-xl text-gray-600">لمحات من أعمالنا وخدماتنا المميزة</p>

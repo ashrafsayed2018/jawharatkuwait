@@ -1,5 +1,5 @@
 <section class="bg-gray-50">
-    <div class="container mx-auto px-4 py-12 text-center">
+    <div class="container mx-auto px-4 py-28 text-center">
         <div class="font-semibold">تواصل سريع</div>
         <div class="mt-4 flex justify-center gap-3">
             @php($phone = \App\Models\Setting::where('key','phone')->value('value') ?: '50850173')

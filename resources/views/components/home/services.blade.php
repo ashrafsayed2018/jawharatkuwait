@@ -2,7 +2,7 @@
 
 @props(['services'])
 <section class="py-20 bg-gradient-to-b from-white to-gray-50">
-    <div class="container mx-auto px-4 py-20">
+    <div class="container mx-auto px-4 py-28">
         
         <!-- Section Header -->
         <div class="text-center mb-16">

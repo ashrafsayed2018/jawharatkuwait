@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto px-4 py-12">
+<div class="container mx-auto px-4 py-28">
     <h1 class="text-2xl font-bold">تفاصيل الرسالة</h1>
     <div class="mt-4 p-4 border rounded">
         <div>الاسم: {{ $message->name }}</div>

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto px-4 py-12">
+<div class="container mx-auto px-4 py-28">
     <article class="prose rtl:prose-invert max-w-none">
         <h1>{{ $post->title }}</h1>
         @if($post->image)

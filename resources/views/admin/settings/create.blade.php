@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto px-4 py-12">
+<div class="container mx-auto px-4 py-28">
     <h1 class="text-2xl font-bold">إضافة إعدادات الموقع</h1>
     <form method="post" action="{{ route('admin.settings.store') }}" enctype="multipart/form-data" class="mt-6 grid md:grid-cols-2 gap-4">
         @csrf

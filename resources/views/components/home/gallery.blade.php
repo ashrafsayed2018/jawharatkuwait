@@ -1,5 +1,5 @@
 @props(['services'])
-<section class="container mx-auto px-4 py-12">
+<section class="container mx-auto px-4 py-28">
     <h2 class="text-2xl font-semibold">صور من أعمالنا</h2>
     
     @if($services->isNotEmpty())

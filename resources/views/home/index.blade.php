@@ -7,7 +7,7 @@
 <x-home.works-tabs />
 <x-home.latest-posts :posts="$latestPosts" />
 <x-home.governorates />
-<section class="container mx-auto px-4 py-12">
+<section class="container mx-auto px-4 py-28">
     <x-contact.form />
 </section>
 @endsection

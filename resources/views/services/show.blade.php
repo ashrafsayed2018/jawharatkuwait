@@ -1,7 +1,7 @@
 {{-- @extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto px-4 py-12">
+<div class="container mx-auto px-4 py-28">
     <div class="grid md:grid-cols-2 gap-6">
         <div>
             @if($service->image)

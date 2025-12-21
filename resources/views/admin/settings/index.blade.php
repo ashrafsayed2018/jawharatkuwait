@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto px-4 py-12">
+<div class="container mx-auto px-4 py-28">
     <h1 class="text-2xl font-bold">الإعدادات العامة</h1>
     @if(!$setting)
         <div class="mt-6 p-6 border rounded bg-white">

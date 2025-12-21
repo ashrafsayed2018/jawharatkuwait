@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="bg-gradient-to-b from-gray-50 to-white">
+<div class="bg-gradient-to-b from-gray-50 to-white py-28">
     <!-- Hero Section -->
     <div class="container mx-auto px-4 py-16 text-center">
         <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">من نحن</h1>

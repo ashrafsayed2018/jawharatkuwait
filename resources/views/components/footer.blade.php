@@ -1,5 +1,5 @@
 <footer class="bg-[#052c22] text-white mt-12 border-t border-[#1a5f50]">
-    <div class="container mx-auto px-4 py-12">
+    <div class="container mx-auto px-4 py-28">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 text-center lg:text-right">
             
             {{-- Column 1: Logo & Description --}}

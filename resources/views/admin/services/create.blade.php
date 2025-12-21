@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto px-4 py-12">
+<div class="container mx-auto px-4 py-28">
     <h1 class="text-2xl font-bold">إضافة خدمة</h1>
     <form method="post" action="{{ route('admin.services.store') }}" enctype="multipart/form-data" class="grid md:grid-cols-2 gap-4 mt-6">
         @csrf
