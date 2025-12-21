@@ -8,7 +8,6 @@ use App\Models\Tag;
 use App\Models\Service;
 use App\Models\Gallery;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
