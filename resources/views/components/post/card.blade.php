@@ -5,7 +5,8 @@
     <div class="relative overflow-hidden aspect-[16/10]">
         @if($image)
             <img src="{{ $image }}" 
-                 class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" 
+                 class="w-full h-full object-fill" 
+                 loading="lazy"
                  alt="{{ $title }}">
             <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
         @else

@@ -15,9 +15,8 @@
         @php($fallback = \App\Helpers\ServiceHelper::getFallbackServices())
         <div class="grid md:grid-cols-3 gap-6 mt-6">
             @foreach($fallback as $item)
-                @php($slug = \Illuminate\Support\Str::arabicSlug($item['title']))
                 <x-service.card 
-                    :href="route('services.show',$slug)" 
+                    :href="route('services.show',$item['slug'])" 
                     :title="$item['title']" 
                     :description="$item['short_description']" 
                     :image="asset($item['image'])" />

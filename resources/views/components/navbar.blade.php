@@ -10,7 +10,9 @@
         <div class="flex items-center justify-between">
             <!-- Logo -->
             <a href="/" class="relative z-10 transition-transform duration-300 hover:scale-105">
-                <img src="{{ asset('images/logo.png') }}" alt="جوهرة الكويت" class="h-14 w-auto drop-shadow-sm">
+                <h1 class="text-2xl md:text-3xl font-bold text-green-600 drop-shadow-sm font-serif">
+                    جوهرة الكويت
+                </h1>
             </a>
 
             <!-- Desktop Navigation -->
@@ -128,7 +130,9 @@
     <!-- Panel Header -->
     <div class="p-5 flex items-center justify-between border-b border-gray-100 bg-gradient-to-r from-primary/5 to-green-50">
         <a href="/">
-            <img src="{{ asset('images/logo.png') }}" alt="جوهرة الكويت" class="h-12 w-auto">
+            <h1 class="text-xl font-bold text-green-600 drop-shadow-sm font-serif">
+                جوهرة الكويت
+            </h1>
         </a>
         <button type="button" 
                 class="p-2 rounded-lg bg-white hover:bg-gray-100 transition-colors duration-300 shadow-sm" 

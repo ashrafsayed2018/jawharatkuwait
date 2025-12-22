@@ -20,6 +20,11 @@ class ServiceController extends Controller
         if (!$service) {
             $fallbackServices = \App\Helpers\ServiceHelper::getFallbackServices();
             $fallbackService = collect($fallbackServices)->first(function ($item) use ($slug) {
+                // Check if the item has a defined slug and it matches
+                if (isset($item['slug']) && $item['slug'] === $slug) {
+                    return true;
+                }
+                // Fallback to checking the generated slug from title (backward compatibility)
                 return Str::arabicSlug($item['title']) === $slug;
             });
 

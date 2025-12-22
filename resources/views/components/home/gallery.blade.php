@@ -6,7 +6,11 @@
         <div class="grid md:grid-cols-4 gap-4 mt-6">
             @foreach($services as $service)
                 @if($service->image)
-                    <img src="{{ $service->image }}" class="w-full h-40 object-cover rounded" alt="">
+                    <img src="{{ $service->image }}" 
+                      class="w-full h-full object-fill transition-transform duration-700 group-hover:scale-110" 
+                    loading="lazy"
+                    alt="{{ $service->title }}"
+                    >
                 @endif
             @endforeach
         </div>
@@ -14,7 +18,10 @@
         @php($fallback = \App\Helpers\ServiceHelper::getFallbackServices())
         <div class="grid md:grid-cols-4 gap-4 mt-6">
             @foreach($fallback as $item)
-                <img src="{{ asset($item['image']) }}" class="w-full h-40 object-cover rounded hover:scale-105 transition-transform duration-300 cursor-pointer" alt="{{ $item['title'] }}">
+                <img src="{{ asset($item['image']) }}" 
+                   class="w-full h-full object-fill transition-transform duration-700 group-hover:scale-110" 
+                    loading="lazy"s
+                 alt="{{ $item['title'] }}">
             @endforeach
         </div>
     @endif
