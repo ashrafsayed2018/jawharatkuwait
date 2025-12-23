@@ -2,13 +2,13 @@
 
 <a href="{{ $href }}" class="group flex flex-col h-full bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
     <!-- Image Container -->
-    <div class="relative overflow-hidden aspect-[16/10]">
+    <div class="relative h-160 overflow-hidden">
         @if($image)
             <img src="{{ $image }}" 
                  class="w-full h-full object-fill" 
                  loading="lazy"
                  alt="{{ $title }}">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div class="absolute inset-0 bg-linear-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
         @else
             <div class="w-full h-full bg-gray-100 flex items-center justify-center text-gray-400">
                 <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -1,5 +1,5 @@
 @props(['posts'])
-<section class="container mx-auto px-4 py-28">
+<section class="container mx-auto px-4 py-10">
     <h2 class="text-2xl font-semibold">أحدث المقالات</h2>
     <div class="grid md:grid-cols-3 gap-8 mt-8">
         @forelse($posts as $post)

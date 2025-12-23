@@ -1,10 +1,10 @@
-<section class="relative overflow-hidden min-h-screen flex items-center" style="padding-top: 80px;">
-    @php($heroImage = ($siteSettings->logo_path ?? null) ? $siteSettings->logo_path : asset('images/جوهرة الكويت خدمة ضيافة رجالي/1.jpeg'))
-    
+@php($heroImage = $heroImage ?? asset('images/hero.jpeg'))
+<section class="relative overflow-hidden h-150 flex items-center" style="padding-top: 80px;">
     <!-- Background Image -->
     <div class="absolute inset-0 hero-bg">
         <img src="{{ $heroImage }}" 
              alt="جوهرة الكويت" 
-             class="absolute inset-0 w-full h-full object-cover">
+             class="w-full h-full object-fill md:object-cover transition-transform duration-700 group-hover:scale-110" 
+             >
     </div>
 </section>

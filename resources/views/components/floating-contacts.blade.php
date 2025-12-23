@@ -1,6 +1,6 @@
 @php($whatsapp = $siteSettings->whatsapp_number ?? '50850173')
 @php($phone = $siteSettings->phone_number ?? '50850173')
-@php($instagram = $siteSettings->instagram_url ?? null)
+@php($instagram = 'https://www.instagram.com/gawharat.kwiut?igsh=OWJmdGtqdjZ6Yjhw')
 
 <div class="fixed bottom-4 left-4 z-50 flex flex-col gap-3">
     @if($instagram)
