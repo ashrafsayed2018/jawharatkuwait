@@ -2,7 +2,7 @@
 
 <a href="{{ $href }}" class="group flex flex-col h-full bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
     <!-- Image Container -->
-    <div class="relative h-160 overflow-hidden">
+    <div class="relative h-80 overflow-hidden">
         @if($image)
             <img src="{{ $image }}" 
                  class="w-full h-full object-fill" 
