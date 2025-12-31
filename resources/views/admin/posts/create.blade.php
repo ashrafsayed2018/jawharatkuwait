@@ -50,7 +50,7 @@
         <!-- Content -->
         <div class="md:col-span-2">
             <label class="block text-gray-700 text-sm font-bold mb-2">المحتوى</label>
-            <textarea name="content" class="border p-3 rounded w-full" rows="8" placeholder="المحتوى" required></textarea>
+            <textarea name="content" id="content" class="border p-3 rounded w-full" rows="8" placeholder="المحتوى" required></textarea>
         </div>
 
         <!-- Meta & Date -->
@@ -169,4 +169,5 @@ function clearGallerySelection() {
     document.querySelector('#image_preview img').src = '';
 }
 </script>
+<x-backend.admin.tinymce-config />
 @endsection
