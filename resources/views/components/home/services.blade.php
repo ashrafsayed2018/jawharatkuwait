@@ -36,8 +36,9 @@
 
         @php($whatsapp = \App\Models\Setting::where('key','whatsapp')->value('value') ?: '50850173')
         
-        @if($services->isNotEmpty())
+        {{-- @if($services->isNotEmpty()) --}}
             <!-- Services Grid -->
+
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 @foreach($services as $service)
                     <x-service.card 
@@ -47,7 +48,7 @@
                         :image="$service->image" />
                 @endforeach
             </div>
-        @else
+        {{-- @else
             @php($fallback = \App\Helpers\ServiceHelper::getFallbackServices())
             
             <!-- Services Grid -->
@@ -60,7 +61,7 @@
                         :description="$item['short_description']" />
                 @endforeach
             </div>
-        @endif
+        @endif --}}
 
         <!-- CTA Section -->
         <div class="mt-16 text-center">
