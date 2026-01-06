@@ -11,9 +11,15 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::with(['service', 'gallery'])->latest()->paginate(20);
+        $query = Post::with(['service', 'gallery'])->latest();
+        
+        if ($request->status === 'archived') {
+            $query->onlyTrashed();
+        }
+
+        $posts = $query->paginate(20);
         return view('admin.posts.index', compact('posts'));
     }
 
@@ -21,7 +27,10 @@ class PostController extends Controller
     {
         $services = Service::all();
         $tags = Tag::all();
-        return view('admin.posts.create', compact('services', 'tags'));
+        $imageList = Gallery::latest()->get()->map(function($image) {
+            return ['title' => $image->title ?? 'Image', 'value' => $image->image_url];
+        });
+        return view('admin.posts.create', compact('services', 'tags', 'imageList'));
     }
 
     public function store(Request $request)
@@ -34,8 +43,8 @@ class PostController extends Controller
             'service_id' => ['required', 'exists:services,id'],
             'gallery_id' => ['required', 'exists:galleries,id'],
             'published_at' => ['nullable', 'date'],
-            'meta_title' => ['nullable', 'string', 'max:255'],
-            'meta_description' => ['nullable', 'string', 'max:255'],
+            'meta_title' => ['required', 'string', 'max:255'],
+            'meta_description' => ['required', 'string', 'max:255'],
         ]);
 
         if ($request->filled('gallery_id')) {
@@ -62,7 +71,10 @@ class PostController extends Controller
         $services = Service::all();
         $tags = Tag::all();
         $post->load('relatedTags');
-        return view('admin.posts.edit', compact('post', 'services', 'tags'));
+        $imageList = Gallery::latest()->get()->map(function($image) {
+            return ['title' => $image->title ?? 'Image', 'value' => $image->image_url];
+        });
+        return view('admin.posts.edit', compact('post', 'services', 'tags', 'imageList'));
     }
 
     public function update(Request $request, Post $post)
@@ -100,9 +112,23 @@ class PostController extends Controller
 
     public function destroy(Post $post)
     {
-        $post->relatedTags()->detach();
         $post->delete();
-        return redirect()->route('admin.posts.index')->with('success', 'تم حذف المقال بنجاح');
+        return redirect()->route('admin.posts.index')->with('success', 'تم نقل المقال للأرشيف بنجاح');
+    }
+
+    public function restore($id)
+    {
+        $post = Post::onlyTrashed()->findOrFail($id);
+        $post->restore();
+        return redirect()->route('admin.posts.index', ['status' => 'archived'])->with('success', 'تم استعادة المقال بنجاح');
+    }
+
+    public function forceDelete($id)
+    {
+        $post = Post::onlyTrashed()->findOrFail($id);
+        $post->relatedTags()->detach();
+        $post->forceDelete();
+        return redirect()->route('admin.posts.index', ['status' => 'archived'])->with('success', 'تم حذف المقال نهائياً');
     }
 
     private function compressImage(string $absolutePath): void

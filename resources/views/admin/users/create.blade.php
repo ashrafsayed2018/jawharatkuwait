@@ -1,0 +1,72 @@
+@extends('layouts.admin')
+
+@section('content')
+<div class="container mx-auto px-4 py-8 max-w-4xl">
+    <div class="flex justify-between items-center mb-8">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900">إضافة مستخدم جديد</h1>
+        </div>
+        <a href="{{ route('admin.users.index') }}" class="px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors shadow-sm font-medium">
+            إلغاء
+        </a>
+    </div>
+
+    <form method="post" action="{{ route('admin.users.store') }}">
+        @csrf
+        
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden p-6 space-y-6">
+            <!-- Name -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">الاسم <span class="text-red-500">*</span></label>
+                <input type="text" name="name" value="{{ old('name') }}" class="w-full px-4 py-3 rounded-lg border-gray-300 border focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors shadow-sm @error('name') border-red-500 @enderror" required>
+                @error('name')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- Email -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">البريد الإلكتروني <span class="text-red-500">*</span></label>
+                <input type="email" name="email" value="{{ old('email') }}" class="w-full px-4 py-3 rounded-lg border-gray-300 border focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors shadow-sm @error('email') border-red-500 @enderror" required>
+                @error('email')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- Password -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">كلمة المرور <span class="text-red-500">*</span></label>
+                <input type="password" name="password" class="w-full px-4 py-3 rounded-lg border-gray-300 border focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors shadow-sm @error('password') border-red-500 @enderror" required>
+                @error('password')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- Confirm Password -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">تأكيد كلمة المرور <span class="text-red-500">*</span></label>
+                <input type="password" name="password_confirmation" class="w-full px-4 py-3 rounded-lg border-gray-300 border focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors shadow-sm" required>
+            </div>
+
+            <!-- Roles -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">الأدوار</label>
+                <div class="space-y-2">
+                    @foreach($roles as $role)
+                        <label class="flex items-center p-2 rounded hover:bg-gray-50 cursor-pointer transition-colors select-none">
+                            <input type="checkbox" name="roles[]" value="{{ $role->id }}" class="w-4 h-4 text-green-600 rounded border-gray-300 focus:ring-green-500 ml-3">
+                            <span class="text-gray-700 text-sm">{{ $role->label ?? $role->name }}</span>
+                        </label>
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="pt-4 border-t border-gray-100">
+                <button type="submit" class="w-full py-3 px-4 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg shadow-sm transition-colors">
+                    حفظ المستخدم
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+@endsection

@@ -13,6 +13,8 @@ use App\Http\Controllers\Admin\ContactMessageController as AdminContactMessageCo
 use App\Http\Controllers\Admin\SettingController as AdminSettingController;
 use App\Http\Controllers\Admin\GalleryController as AdminGalleryController;
 use App\Http\Controllers\Admin\TagController as AdminTagController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\GalleryController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -37,6 +39,8 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/gallery/api', [AdminGalleryController::class, 'api'])->name('gallery.api'); // Add API route
     Route::resource('services', AdminServiceController::class);
+    Route::post('posts/{id}/restore', [AdminPostController::class, 'restore'])->name('posts.restore');
+    Route::delete('posts/{id}/force-delete', [AdminPostController::class, 'forceDelete'])->name('posts.forceDelete');
     Route::resource('posts', AdminPostController::class);
     Route::resource('messages', AdminContactMessageController::class)->only(['index', 'show', 'destroy', 'update']);
     Route::get('messages/{message}/toggle-read', [AdminContactMessageController::class, 'toggleRead'])->name('messages.toggleRead');
@@ -44,4 +48,6 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('settings', AdminSettingController::class)->only(['index', 'create', 'store', 'edit', 'update']);
     Route::resource('gallery', AdminGalleryController::class)->only(['index', 'store', 'destroy']);
     Route::resource('tags', AdminTagController::class)->except(['show', 'create', 'edit']); // Using modal/inline for edit
+    Route::resource('users', UserController::class);
+    Route::resource('roles', RoleController::class);
 });
