@@ -7,7 +7,7 @@
     @if($services->isNotEmpty())
         <div class="grid md:grid-cols-3 gap-6 mt-6">
             @foreach($services as $service)
-                <x-service.card :href="route('services.show',$service->slug)" :title="$service->title" :description="$service->short_description" :image="$service->image" />
+                <x-service.card :href="route('services.show',$service->slug)" :title="$service->title" :description="$service->short_description" :image="asset($service->image)" />
             @endforeach
         </div>
         <div class="mt-6">{{ $services->links() }}</div>

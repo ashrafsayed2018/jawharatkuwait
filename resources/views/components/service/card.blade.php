@@ -15,7 +15,7 @@
            >
         
         <!-- Gradient Overlay -->
-        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
+        <div class="absolute inset-0 bg-linear-to-t from-black/60 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
         
         <!-- Hover Icon -->
         <div class="absolute top-4 left-4 w-12 h-12 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 transform -translate-y-2 group-hover:translate-y-0">
@@ -26,7 +26,7 @@
         </div>
         
         <!-- Green Accent Border (appears on hover) -->
-        <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-green-400 to-primary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
+        <div class="absolute bottom-0 left-0 right-0 h-1 bg-linear-to-r from-primary via-green-400 to-primary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
     </div>
 
     <!-- Content -->
@@ -55,7 +55,7 @@
     </div>
 
     <!-- Decorative Corner (appears on hover) -->
-    <div class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-primary/20 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+    <div class="absolute top-0 right-0 w-20 h-20 bg-linear-to-br from-primary/20 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 </a>
 
 <style>

@@ -4,9 +4,9 @@
     <div class="grid md:grid-cols-3 gap-8 mt-8">
         @forelse($posts as $post)
             <x-post.card 
-                :href="route('blog.show',$post->slug)" 
+                :href="route('post.show',$post->slug)" 
                 :title="$post->title" 
-                :image="$post->image" 
+                :image="asset($post->image)"  
                 :excerpt="$post->meta_description ?? Str::limit(strip_tags($post->content), 120)"
                 :date="$post->created_at->translatedFormat('d M Y')"
             />

@@ -22,7 +22,7 @@
             <h2 class="text-2xl font-bold mb-6 text-gray-800">مقالات ذات صلة</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 @foreach($relatedPosts as $relatedPost)
-                    <a href="{{ route('blog.show', $relatedPost->slug) }}" class="group block bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden border border-gray-100">
+                    <a href="{{ route('post.show', $relatedPost->slug) }}" class="group block bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden border border-gray-100">
                         <div class="h-56 overflow-hidden relative">
                             @if($relatedPost->image)
                                 <img src="{{ $relatedPost->image }}" alt="{{ $relatedPost->title }}" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300">

@@ -55,7 +55,7 @@
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="flex items-center gap-3">
                                 @if($post->image)
-                                    <img src="{{ $post->image }}" class="w-10 h-10 rounded-lg object-cover border border-gray-200" alt="">
+                                    <img src="{{ asset($post->image) }}" class="w-10 h-10 rounded-lg object-cover border border-gray-200" alt="">
                                 @else
                                     <div class="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center text-gray-400">
                                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

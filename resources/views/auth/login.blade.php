@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="min-h-screen bg-gradient-to-br from-primary/10 via-green-50 to-white flex items-center">
+<div class="min-h-screen bg-linear-to-br from-primary/10 via-green-50 to-white flex items-center">
     <div class="container mx-auto px-4">
         <div class="mx-auto max-w-5xl grid md:grid-cols-2 gap-6">
             <div class="rounded-2xl shadow-lg bg-white/80 backdrop-blur px-8 py-10">

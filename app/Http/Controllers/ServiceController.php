@@ -53,10 +53,14 @@ class ServiceController extends Controller
                 ]);
             }
         }
-        $relatedPosts = \App\Models\Post::where(function ($q) use ($service) {
-            $q->where('tags', 'like', '%'.$service->slug.'%')
-              ->orWhere('tags', 'like', '%'.$service->title.'%');
-        })->latest()->take(6)->get();
+        if ($service->exists) {
+            $relatedPosts = $service->posts()->latest()->get();
+        } else {
+            $relatedPosts = \App\Models\Post::where(function ($q) use ($service) {
+                $q->where('tags', 'like', '%'.$service->slug.'%')
+                  ->orWhere('tags', 'like', '%'.$service->title.'%');
+            })->latest()->get();
+        }
         return view('services.show', [
             'service' => $service,
             'relatedPosts' => $relatedPosts,

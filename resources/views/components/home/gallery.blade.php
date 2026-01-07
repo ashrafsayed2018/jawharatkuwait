@@ -6,7 +6,7 @@
         <div class="grid md:grid-cols-4 gap-4 mt-6">
             @foreach($services as $service)
                 @if($service->image)
-                    <img src="{{ $service->image }}" 
+                    <img src="{{ asset($service->image) }}" 
                       class="w-full h-full object-fill transition-transform duration-700 group-hover:scale-110" 
                     loading="lazy"
                     alt="{{ $service->title }}"
