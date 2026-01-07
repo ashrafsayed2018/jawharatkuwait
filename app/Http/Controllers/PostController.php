@@ -15,9 +15,16 @@ class PostController extends Controller
 
     public function show($slug)
     {
-        $post = Post::with('gallery')->where('slug', $slug)->firstOrFail();
+        $post = Post::with('gallery', 'service')->where('slug', $slug)->firstOrFail();
+        
+        $relatedPosts = Post::where('service_id', $post->service_id)
+            ->where('id', '!=', $post->id)
+            ->latest()
+            ->get();
+
         return view('blog.show', [
             'post' => $post,
+            'relatedPosts' => $relatedPosts,
             'metaTitle' => $post->meta_title,
             'metaDescription' => $post->meta_description,
         ]);
