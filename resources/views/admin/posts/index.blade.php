@@ -64,7 +64,9 @@
                                     </div>
                                 @endif
                                 <div>
-                                    <div class="text-sm font-medium text-gray-900">{{ \Illuminate\Support\Str::limit($post->title, 40) }}</div>
+                                    <a href="{{ route('post.show', $post->slug) }}" target="_blank" class="text-sm font-medium text-gray-900 hover:text-green-600 transition-colors block">
+                                        {{ \Illuminate\Support\Str::limit($post->title, 40) }}
+                                    </a>
                                     <div class="text-xs text-gray-500">{{ $post->slug }}</div>
                                 </div>
                             </div>
