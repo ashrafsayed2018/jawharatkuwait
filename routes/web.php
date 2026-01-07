@@ -24,6 +24,7 @@ Route::get('/services/{slug}', [PublicServiceController::class, 'show'])->name('
 Route::get('/services/title/{title}', [PublicServiceController::class, 'fromTitle'])->name('services.fromTitle');
 Route::get('/about', [HomeController::class, 'about'])->name('about');
 Route::get('/blog', [PublicPostController::class, 'index'])->name('blog.index');
+Route::get('/tags/{slug}', [PublicPostController::class, 'tag'])->name('tags.show');
 Route::get('/post/{slug}', [PublicPostController::class, 'show'])->name('post.show');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');

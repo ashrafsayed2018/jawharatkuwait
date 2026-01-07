@@ -3,15 +3,18 @@
 @section('content')
 <div class="container mx-auto px-4 py-28">
     <article class="prose rtl:prose-invert max-w-none">
-        <h1>{{ $post->title }}</h1>
+        <h1 class="text-4xl md:text-5xl font-bold mb-8 text-gray-900 leading-tight">{{ $post->title }}</h1>
         @if($post->image)
-            <img src="{{ $post->image }}" class="w-full h-[50vh] md:h-[80vh] object-cover rounded" alt="{{ $post->title }}">
+            <img src="{{ $post->image }}" class="w-full h-[50vh] md:h-[80vh] object-cover rounded-2xl shadow-lg mb-8" alt="{{ $post->title }}">
         @endif
-        <div class="mt-4">{!! $post->content !!}</div>
+        <div class="mt-8 text-lg leading-relaxed text-gray-700">{!! $post->content !!}</div>
         @if($post->tags)
-            <div class="mt-6 flex gap-2">
+            <div class="mt-10 flex flex-wrap gap-3 pt-6 border-t border-gray-100">
                 @foreach($post->tags as $tag)
-                    <span class="px-3 py-1 bg-gray-200 rounded">{{ $tag }}</span>
+                    <a href="{{ route('tags.show', Str::arabicSlug($tag)) }}" 
+                       class="inline-flex items-center px-4 py-2 rounded-lg bg-gray-50 text-gray-700 hover:bg-primary hover:text-white transition-all duration-300 text-sm font-medium">
+                        # {{ $tag }}
+                    </a>
                 @endforeach
             </div>
         @endif
