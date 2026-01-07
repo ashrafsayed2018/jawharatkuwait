@@ -57,7 +57,9 @@
                             </div>
                         @endif
                         <div class="flex-1">
-                            <h4 class="font-medium text-gray-800">{{ $post->title }}</h4>
+                            <a href="{{ route('post.show', $post->slug) }}" target="_blank" class="font-medium text-gray-800 hover:text-green-600 transition-colors block">
+                                {{ $post->title }}
+                            </a>
                             <p class="text-sm text-gray-500">{{ $post->created_at->diffForHumans() }}</p>
                         </div>
                     </div>
