@@ -54,6 +54,13 @@ class ServiceController extends Controller
             }
         }
         if ($service->exists) {
+            // Increment views if not already viewed in this session
+            $sessionKey = 'viewed_service_' . $service->id;
+            if (!session()->has($sessionKey)) {
+                $service->increment('views');
+                session()->put($sessionKey, true);
+            }
+
             $relatedPosts = $service->posts()->latest()->get();
         } else {
             $relatedPosts = \App\Models\Post::where(function ($q) use ($service) {
