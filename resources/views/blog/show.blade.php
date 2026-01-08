@@ -24,8 +24,10 @@
             </div>
         </div>
 
+
+        {{-- class="w-full h-[50vh] md:h-[80vh] object-cover rounded-2xl shadow-lg mb-8" --}}
         @if($post->image)
-            <img src="{{ $post->image }}" class="w-full h-[50vh] md:h-[80vh] object-cover rounded-2xl shadow-lg mb-8" alt="{{ $post->title }}">
+            <img src="{{ $post->image }}"  class="w-full h-full object-fill transition-transform duration-700 group-hover:scale-110" alt="{{ $post->title }}">
         @endif
         <div class="mt-8 text-lg leading-relaxed text-gray-700">{!! $post->content !!}</div>
         @if($post->tags)
