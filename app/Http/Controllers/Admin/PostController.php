@@ -8,6 +8,7 @@ use App\Models\Tag;
 use App\Models\Service;
 use App\Models\Gallery;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class PostController extends Controller
 {
@@ -36,7 +37,12 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'title' => ['required', 'string', 'max:255'],
+            'title' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('posts', 'title'),
+            ],
             'content' => ['required', 'string'],
             'tags' => ['nullable', 'array'],
             'tags.*' => ['exists:tags,id'],
@@ -80,7 +86,12 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         $data = $request->validate([
-            'title' => ['required', 'string', 'max:255'],
+            'title' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('posts', 'title')->ignore($post->id),
+            ],
             'content' => ['required', 'string'],
             'tags' => ['nullable', 'array'],
             'tags.*' => ['exists:tags,id'],
