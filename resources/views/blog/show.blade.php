@@ -36,21 +36,54 @@
 
             if (!$hasHtml) {
                 $normalized = str_replace(["\r\n", "\r"], "\n", trim($rawContent));
-                $blocks = preg_split("/\n{2,}/", $normalized) ?: [];
+                $lines = explode("\n", $normalized);
                 $parts = [];
+                $paragraph = [];
 
-                foreach ($blocks as $block) {
-                    $lines = array_values(array_filter(array_map('trim', explode("\n", $block)), fn ($line) => $line !== ''));
+                $isHeadingCandidate = function (string $line): bool {
+                    $line = trim($line);
+                    if ($line === '') return false;
+                    if (mb_strlen($line) > 140) return false;
+                    if (preg_match('/^(\-|\*|•|\d+[\.\-]|\=\=)/u', $line) === 1) return false;
+                    return true;
+                };
 
-                    if (count($lines) === 1 && mb_strlen($lines[0]) <= 140) {
-                        $parts[] = '<h2>' . e($lines[0]) . '</h2>';
+                $flushParagraph = function () use (&$paragraph, &$parts): void {
+                    if (count($paragraph) === 0) return;
+                    $escaped = array_map(fn ($l) => e($l), $paragraph);
+                    $parts[] = '<p class="mt-4 text-gray-700 leading-relaxed">' . implode('<br>', $escaped) . '</p>';
+                    $paragraph = [];
+                };
+
+                $nextNonEmpty = function (array $lines, int $from): ?string {
+                    for ($i = $from; $i < count($lines); $i++) {
+                        $candidate = trim($lines[$i]);
+                        if ($candidate !== '') return $candidate;
+                    }
+                    return null;
+                };
+
+                for ($i = 0; $i < count($lines); $i++) {
+                    $line = trim($lines[$i]);
+                    if ($line === '') {
+                        $flushParagraph();
                         continue;
                     }
 
-                    $escapedLines = array_map(fn ($line) => e($line), $lines);
-                    $parts[] = '<p>' . implode('<br>', $escapedLines) . '</p>';
+                    $nextLine = $nextNonEmpty($lines, $i + 1);
+                    $prevLine = $i > 0 ? trim($lines[$i - 1]) : '';
+                    $prevEndsSentence = $prevLine !== '' && preg_match('/[\.!\؟!؟:]$/u', $prevLine) === 1;
+
+                    if ($isHeadingCandidate($line) && ($prevLine === '' || $prevEndsSentence) && $nextLine !== null && mb_strlen($nextLine) > 40) {
+                        $flushParagraph();
+                        $parts[] = '<h2 class="text-2xl md:text-3xl font-bold mt-10 mb-4 text-gray-900">' . e($line) . '</h2>';
+                        continue;
+                    }
+
+                    $paragraph[] = $line;
                 }
 
+                $flushParagraph();
                 $renderedContent = implode("\n", $parts);
             }
         @endphp
