@@ -51,7 +51,7 @@
                 $flushParagraph = function () use (&$paragraph, &$parts): void {
                     if (count($paragraph) === 0) return;
                     $escaped = array_map(fn ($l) => e($l), $paragraph);
-                    $parts[] = '<p class="mt-4 text-gray-700 leading-relaxed">' . implode('<br>', $escaped) . '</p>';
+                    $parts[] = '<p>' . implode('<br>', $escaped) . '</p>';
                     $paragraph = [];
                 };
 
@@ -76,7 +76,7 @@
 
                     if ($isHeadingCandidate($line) && ($prevLine === '' || $prevEndsSentence) && $nextLine !== null && mb_strlen($nextLine) > 40) {
                         $flushParagraph();
-                        $parts[] = '<h2 class="text-2xl md:text-3xl font-bold mt-10 mb-4 text-gray-900">' . e($line) . '</h2>';
+                        $parts[] = '<h2>' . e($line) . '</h2>';
                         continue;
                     }
 
