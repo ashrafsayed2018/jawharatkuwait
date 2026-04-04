@@ -10,3 +10,33 @@
         'Segoe UI Symbol', 'Noto Color Emoji';
     --color-primary: #16a34a;
 }
+
+@layer components {
+    .post-content h1 {
+        @apply text-3xl md:text-4xl font-bold mt-10 mb-4 text-gray-900;
+    }
+
+    .post-content h2 {
+        @apply text-2xl md:text-3xl font-bold mt-10 mb-4 text-gray-900;
+    }
+
+    .post-content h3 {
+        @apply text-xl md:text-2xl font-bold mt-8 mb-3 text-gray-900;
+    }
+
+    .post-content p {
+        @apply mt-4 text-gray-700 leading-relaxed;
+    }
+
+    .post-content ul {
+        @apply mt-4 list-disc list-inside text-gray-700 leading-relaxed;
+    }
+
+    .post-content ol {
+        @apply mt-4 list-decimal list-inside text-gray-700 leading-relaxed;
+    }
+
+    .post-content li {
+        @apply mt-2;
+    }
+}

@@ -29,7 +29,32 @@
         @if($post->image)
             <img src="{{ $post->image }}"  class="w-full h-full object-fill transition-transform duration-700 group-hover:scale-110" alt="{{ $post->title }}">
         @endif
-        <div class="mt-8 text-lg leading-relaxed text-gray-700">{!! $post->content !!}</div>
+        @php
+            $rawContent = $post->content ?? '';
+            $renderedContent = $rawContent;
+            $hasHtml = preg_match('/<\s*\/?\s*[a-z][^>]*>/i', $rawContent) === 1;
+
+            if (!$hasHtml) {
+                $normalized = str_replace(["\r\n", "\r"], "\n", trim($rawContent));
+                $blocks = preg_split("/\n{2,}/", $normalized) ?: [];
+                $parts = [];
+
+                foreach ($blocks as $block) {
+                    $lines = array_values(array_filter(array_map('trim', explode("\n", $block)), fn ($line) => $line !== ''));
+
+                    if (count($lines) === 1 && mb_strlen($lines[0]) <= 140) {
+                        $parts[] = '<h2>' . e($lines[0]) . '</h2>';
+                        continue;
+                    }
+
+                    $escapedLines = array_map(fn ($line) => e($line), $lines);
+                    $parts[] = '<p>' . implode('<br>', $escapedLines) . '</p>';
+                }
+
+                $renderedContent = implode("\n", $parts);
+            }
+        @endphp
+        <div class="post-content mt-8 text-lg leading-relaxed">{!! $renderedContent !!}</div>
         @if($post->tags)
             <div class="mt-10 flex flex-wrap gap-3 pt-6 border-t border-gray-100">
                 @foreach($post->tags as $tag)
