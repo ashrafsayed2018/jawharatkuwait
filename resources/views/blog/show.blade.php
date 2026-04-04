@@ -55,6 +55,9 @@
                     $paragraph = [];
                 };
 
+                
+
+                // Finds the next non-empty line after the current index (used to decide if a short line is a heading).
                 $nextNonEmpty = function (array $lines, int $from): ?string {
                     for ($i = $from; $i < count($lines); $i++) {
                         $candidate = trim($lines[$i]);
