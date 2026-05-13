@@ -4,7 +4,7 @@
         {{-- Header --}}
         <div class="text-center mb-14">
             <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#d4af37]/15 border border-[#d4af37]/30 text-[#d4af37] text-sm font-medium mb-5">
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
                 </svg>
                 تعليقات العملاء
@@ -13,11 +13,11 @@
             <p class="text-gray-400 text-sm">شاركنا رأيك وتجربتك معنا</p>
         </div>
 
-        <div style="display:flex; gap:2rem; align-items:flex-start; flex-wrap:wrap;">
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
 
             {{-- ── Form column ──────────────────────────────────────────────── --}}
-            <div style="flex:0 0 380px; min-width:300px;">
-                <div class="rounded-2xl bg-white/5 border border-white/10 p-8">
+            <div class="lg:col-span-2">
+                <div class="rounded-2xl bg-white/5 border border-white/10 p-6 md:p-8">
 
                     @if($submitted)
                         <div class="flex flex-col items-center justify-center py-12 text-center gap-4">
@@ -66,13 +66,13 @@
                                     wire:loading.attr="disabled"
                                     class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 px-6 rounded-xl transition-all duration-200 hover:shadow-lg disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2">
                                 <span wire:loading.remove wire:target="submit" class="flex items-center gap-2">
-                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-5 h-5 pointer-events-none" fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
                                     </svg>
                                     إرسال التعليق
                                 </span>
                                 <span wire:loading wire:target="submit" class="flex items-center gap-2">
-                                    <svg class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                                    <svg class="w-4 h-4 animate-spin pointer-events-none" fill="none" viewBox="0 0 24 24">
                                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
                                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 100 16v-4l-3 3 3 3v-4a8 8 0 01-8-8z"/>
                                     </svg>
@@ -86,7 +86,7 @@
             </div>
 
             {{-- ── Comments list ────────────────────────────────────────────── --}}
-            <div style="flex:1; min-width:300px;">
+            <div class="lg:col-span-3">
                 @if($comments->isEmpty())
                     <div class="rounded-2xl bg-white/5 border border-white/10 p-12 text-center">
                         <svg class="w-12 h-12 text-gray-600 mx-auto mb-4" fill="currentColor" viewBox="0 0 24 24">
@@ -97,9 +97,9 @@
                 @else
                     <div class="space-y-4">
                         @foreach($comments as $comment)
-                            <div class="rounded-2xl bg-white/5 border border-white/10 p-6" dir="rtl">
+                            <div class="rounded-2xl bg-white/5 border border-white/10 p-5" dir="rtl">
                                 <div class="flex items-center gap-3 mb-3">
-                                    <div class="w-10 h-10 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center flex-shrink-0">
+                                    <div class="w-10 h-10 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center shrink-0">
                                         <span class="text-primary font-bold text-sm">
                                             {{ mb_substr($comment->name, 0, 1) }}
                                         </span>
