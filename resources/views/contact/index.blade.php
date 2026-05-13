@@ -4,4 +4,6 @@
 <div class="container mx-auto px-4 py-28">
     <x-contact.form />
 </div>
+
+<livewire:rating-widget />
 @endsection

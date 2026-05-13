@@ -16,4 +16,6 @@
     </div>
     <div class="mt-6">{{ $posts->links() }}</div>
 </div>
+
+<livewire:rating-widget />
 @endsection

@@ -16,6 +16,8 @@ use App\Http\Controllers\Admin\TagController as AdminTagController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\RatingController;
+use App\Http\Controllers\Admin\RatingController as AdminRatingController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index');
@@ -29,6 +31,9 @@ Route::get('/post/{slug}', [PublicPostController::class, 'show'])->name('post.sh
 Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 Route::get('/sitemap.xml', [HomeController::class, 'sitemap'])->name('sitemap');
+
+Route::get('/ratings', [RatingController::class, 'index'])->name('ratings.index');
+Route::post('/ratings', [RatingController::class, 'store'])->name('ratings.store');
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
@@ -51,4 +56,8 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('tags', AdminTagController::class)->except(['show', 'create', 'edit']); // Using modal/inline for edit
     Route::resource('users', UserController::class);
     Route::resource('roles', RoleController::class);
+    Route::get('ratings', [AdminRatingController::class, 'viewIndex'])->name('ratings.index');
+    Route::get('ratings/api', [AdminRatingController::class, 'index'])->name('ratings.api');
+    Route::patch('ratings/{rating}/approve', [AdminRatingController::class, 'approve'])->name('ratings.approve');
+    Route::delete('ratings/{rating}', [AdminRatingController::class, 'destroy'])->name('ratings.destroy');
 });

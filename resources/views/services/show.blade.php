@@ -223,6 +223,8 @@
 </section>
 @endif
 
+<livewire:rating-widget />
+
 <!-- Related Posts Section -->
 <section class="py-20 bg-linear-to-b from-gray-50 to-white">
     <div class="container mx-auto px-4">

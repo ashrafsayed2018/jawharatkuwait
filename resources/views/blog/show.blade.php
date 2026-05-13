@@ -130,4 +130,6 @@
         </div>
     @endif
 </div>
+
+<livewire:rating-widget />
 @endsection

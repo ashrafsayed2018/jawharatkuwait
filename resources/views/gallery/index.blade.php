@@ -71,4 +71,6 @@
         }
     });
 </script>
+
+<livewire:rating-widget />
 @endsection

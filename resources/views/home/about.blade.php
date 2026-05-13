@@ -86,4 +86,6 @@
         </div>
     </div>
 </div>
+
+<livewire:rating-widget />
 @endsection
