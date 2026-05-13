@@ -9,13 +9,11 @@
     $cnt = $stats['count'];
 @endphp
 
-<section class="relative py-20 overflow-hidden bg-[#052c22]" id="ratings-section">
+<section class="relative py-20 overflow-hidden bg-[#052c22]" id="ratings-section" dir="rtl">
 
-    {{-- Decorative background shapes --}}
     <div class="absolute inset-0 pointer-events-none">
         <div class="absolute -top-20 -right-20 w-96 h-96 rounded-full bg-primary/10 blur-3xl"></div>
         <div class="absolute -bottom-20 -left-20 w-80 h-80 rounded-full bg-[#d4af37]/10 blur-3xl"></div>
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full border border-white/5"></div>
     </div>
 
     <div class="relative container mx-auto px-4">
@@ -34,76 +32,8 @@
 
         <div class="grid lg:grid-cols-5 gap-8 items-start">
 
-            {{-- ── Left panel: live stats ─────────────────────────────────────── --}}
-            <div class="lg:col-span-2 space-y-6">
-
-                {{-- Overall score card --}}
-                <div class="relative rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm p-6 text-center overflow-hidden">
-                    <div class="absolute inset-0 bg-linear-to-br from-primary/10 to-transparent pointer-events-none"></div>
-                    <div class="relative">
-
-                        <div class="text-6xl font-bold text-white mb-1">
-                            {{ $cnt > 0 ? number_format($avg, 2) : '—' }}
-                        </div>
-
-                        <div class="flex justify-center gap-1 mb-3">
-                            @for ($i = 1; $i <= 5; $i++)
-                                <svg class="w-7 h-7 transition-all duration-300 {{ $i <= round($avg) ? 'text-[#d4af37]' : 'text-[#d4af37]/25' }}"
-                                     fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                                </svg>
-                            @endfor
-                        </div>
-
-                        @if($cnt > 0)
-                            <div class="inline-block px-4 py-1.5 rounded-full text-sm font-bold bg-primary text-white mb-2">
-                                {{ \App\Models\Rating::labelFor((int) round($avg)) }}
-                            </div>
-                        @else
-                            <div class="inline-block px-4 py-1.5 rounded-full text-sm font-bold bg-white/10 text-gray-400 mb-2">—</div>
-                        @endif
-
-                        <p class="text-gray-400 text-sm">
-                            @if($cnt > 0)
-                                تقييم المستخدمين: {{ $avg }} ({{ $cnt }} تقييمات)
-                            @else
-                                لا توجد تقييمات بعد
-                            @endif
-                        </p>
-                    </div>
-                </div>
-
-                {{-- Sub-category rows --}}
-                <div class="rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm overflow-hidden divide-y divide-white/5">
-                    @foreach ($catFields as $cat)
-                        @php
-                            $vals   = $reviews->pluck($cat['key'])->filter()->values();
-                            $catAvg = $vals->count() ? round($vals->avg(), 1) : 0;
-                        @endphp
-                        <div class="flex items-center justify-between px-5 py-4 hover:bg-white/5 transition-colors duration-200">
-                            <span class="text-gray-300 text-sm font-medium">{{ $cat['label'] }}</span>
-                            <div class="flex items-center gap-2">
-                                <div class="flex gap-0.5">
-                                    @for ($i = 1; $i <= 5; $i++)
-                                        <svg class="w-4 h-4 {{ $i <= round($catAvg) ? 'text-[#d4af37]' : 'text-[#d4af37]/25' }}"
-                                             fill="currentColor" viewBox="0 0 20 20">
-                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                                        </svg>
-                                    @endfor
-                                </div>
-                                <span class="text-[#d4af37] text-xs font-bold w-6 text-center">
-                                    {{ $catAvg > 0 ? $catAvg : '—' }}
-                                </span>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-
-      
-            </div>
-
-            {{-- ── Right panel: Livewire form ─────────────────────────────────── --}}
-            <div class="lg:col-span-3">
+            {{-- ── Right panel (col-span-3): form ─────────────────────────────── --}}
+            <div class="lg:col-span-3 order-1 lg:order-1">
                 <div class="rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm p-8">
 
                     @if($submitted)
@@ -132,30 +62,30 @@
                                 <label class="block text-gray-300 text-sm font-semibold mb-3">
                                     التقييم العام <span class="text-red-400">*</span>
                                 </label>
-                                <div class="flex items-center gap-2">
+                                <div class="flex items-center gap-3 flex-wrap">
                                     @for ($i = 1; $i <= 5; $i++)
                                         <button type="button"
                                                 wire:click="setScore('overall', {{ $i }})"
-                                                class="w-12 h-12 rounded-xl border transition-all duration-200 flex items-center justify-center {{ ($overall ?? 0) >= $i ? 'bg-[#d4af37]/20 border-[#d4af37]/60' : 'bg-white/5 border-white/10 hover:bg-[#d4af37]/10 hover:border-[#d4af37]/30' }}">
-                                            <svg class="w-6 h-6 {{ ($overall ?? 0) >= $i ? 'text-[#d4af37]' : 'text-gray-500' }}"
+                                                class="w-14 h-14 rounded-xl border-2 transition-all duration-200 flex items-center justify-center {{ ($overall ?? 0) >= $i ? 'bg-[#d4af37]/20 border-[#d4af37]' : 'bg-white/5 border-white/10 hover:bg-[#d4af37]/10 hover:border-[#d4af37]/40' }}">
+                                            <svg class="w-7 h-7 {{ ($overall ?? 0) >= $i ? 'text-[#d4af37]' : 'text-gray-500' }}"
                                                  fill="currentColor" viewBox="0 0 20 20">
                                                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
                                             </svg>
                                         </button>
                                     @endfor
                                     @if(($overall ?? 0) > 0)
-                                        <span class="text-[#d4af37] font-bold text-sm mr-2">
+                                        <span class="text-[#d4af37] font-bold text-base px-3 py-1 rounded-lg bg-[#d4af37]/10 border border-[#d4af37]/30">
                                             {{ \App\Models\Rating::labelFor($overall) }}
                                         </span>
                                     @endif
                                 </div>
                                 @error('overall')
-                                    <p class="text-red-400 text-xs mt-1">{{ $message }}</p>
+                                    <p class="text-red-400 text-xs mt-2">{{ $message }}</p>
                                 @enderror
                             </div>
 
                             {{-- Sub-category pickers --}}
-                            <div class="grid sm:grid-cols-2 gap-4">
+                            <div class="grid grid-cols-2 gap-4">
                                 @foreach ($catFields as $cat)
                                 @php $fieldVal = match($cat['key']) {
                                     'price'   => $price,
@@ -164,16 +94,16 @@
                                     'quality' => $quality,
                                     default   => 0,
                                 }; @endphp
-                                <div class="rounded-xl bg-white/5 border border-white/10 p-4">
-                                    <label class="block text-gray-400 text-xs font-semibold mb-2 uppercase tracking-wide">
+                                <div class="rounded-xl bg-white/5 border border-white/10 p-4 hover:border-white/20 transition-colors">
+                                    <label class="block text-gray-300 text-sm font-semibold mb-3">
                                         {{ $cat['label'] }}
                                     </label>
-                                    <div class="flex gap-1">
+                                    <div class="flex gap-1.5">
                                         @for ($i = 1; $i <= 5; $i++)
                                             <button type="button"
                                                     wire:click="setScore('{{ $cat['key'] }}', {{ $i }})"
-                                                    class="w-7 h-7 rounded-lg border transition-all duration-150 flex items-center justify-center {{ ($fieldVal ?? 0) >= $i ? 'bg-[#d4af37]/20 border-[#d4af37]/60' : 'bg-white/5 border-white/10 hover:bg-[#d4af37]/10 hover:border-[#d4af37]/30' }}">
-                                                <svg class="w-4 h-4 {{ ($fieldVal ?? 0) >= $i ? 'text-[#d4af37]' : 'text-gray-600' }}"
+                                                    class="w-9 h-9 rounded-lg border transition-all duration-150 flex items-center justify-center {{ ($fieldVal ?? 0) >= $i ? 'bg-[#d4af37]/20 border-[#d4af37]/70' : 'bg-white/5 border-white/10 hover:bg-[#d4af37]/10 hover:border-[#d4af37]/30' }}">
+                                                <svg class="w-5 h-5 {{ ($fieldVal ?? 0) >= $i ? 'text-[#d4af37]' : 'text-gray-600' }}"
                                                      fill="currentColor" viewBox="0 0 20 20">
                                                     <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
                                                 </svg>
@@ -201,7 +131,7 @@
                             <button type="submit"
                                     wire:loading.attr="disabled"
                                     class="w-full relative inline-flex items-center justify-center gap-3 px-6 py-4 rounded-xl font-bold text-white overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/30 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100">
-                                <span class="absolute inset-0 bg-linear-to-r from-primary to-green-600"></span>
+                                <span class="absolute inset-0 bg-gradient-to-r from-primary to-green-600"></span>
                                 <span wire:loading.remove wire:target="submit" class="relative z-10 flex items-center gap-2">
                                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
@@ -221,15 +151,69 @@
                     @endif
                 </div>
             </div>
+
+            {{-- ── Left panel (col-span-2): live stats ────────────────────────── --}}
+            <div class="lg:col-span-2 order-2 lg:order-2 space-y-5">
+
+                {{-- Overall score card --}}
+                <div class="rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm p-8 text-center">
+                    <div class="text-7xl font-bold text-white mb-2 leading-none">
+                        {{ $cnt > 0 ? number_format($avg, 1) : '—' }}
+                    </div>
+                    <div class="flex justify-center gap-1.5 mb-4">
+                        @for ($i = 1; $i <= 5; $i++)
+                            <svg class="w-8 h-8 {{ $i <= round($avg) ? 'text-[#d4af37]' : 'text-[#d4af37]/25' }}"
+                                 fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                            </svg>
+                        @endfor
+                    </div>
+                    @if($cnt > 0)
+                        <div class="inline-block px-5 py-1.5 rounded-full text-sm font-bold bg-primary text-white mb-3">
+                            {{ \App\Models\Rating::labelFor((int) round($avg)) }}
+                        </div>
+                        <p class="text-gray-400 text-sm">{{ $cnt }} تقييم من عملائنا</p>
+                    @else
+                        <div class="inline-block px-5 py-1.5 rounded-full text-sm font-bold bg-white/10 text-gray-400 mb-3">—</div>
+                        <p class="text-gray-500 text-sm">لا توجد تقييمات بعد</p>
+                    @endif
+                </div>
+
+                {{-- Sub-category averages --}}
+                <div class="rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm overflow-hidden">
+                    @foreach ($catFields as $cat)
+                        @php
+                            $vals   = $reviews->pluck($cat['key'])->filter()->values();
+                            $catAvg = $vals->count() ? round($vals->avg(), 1) : 0;
+                            $pct    = ($catAvg / 5) * 100;
+                        @endphp
+                        <div class="px-6 py-4 {{ !$loop->last ? 'border-b border-white/5' : '' }}">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-gray-300 text-sm font-medium">{{ $cat['label'] }}</span>
+                                <div class="flex items-center gap-2">
+                                    <div class="flex gap-0.5">
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            <svg class="w-4 h-4 {{ $i <= round($catAvg) ? 'text-[#d4af37]' : 'text-[#d4af37]/20' }}"
+                                                 fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                            </svg>
+                                        @endfor
+                                    </div>
+                                    <span class="text-[#d4af37] text-xs font-bold w-7 text-left">
+                                        {{ $catAvg > 0 ? $catAvg : '—' }}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="w-full bg-white/10 rounded-full h-1.5">
+                                <div class="bg-[#d4af37] h-1.5 rounded-full transition-all duration-500"
+                                     style="width: {{ $pct }}%"></div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+
+            </div>
+
         </div>
     </div>
 </section>
-
-<style>
-.line-clamp-2 {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-</style>
