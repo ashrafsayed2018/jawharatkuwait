@@ -8,6 +8,7 @@
 <x-home.latest-posts :posts="$latestPosts" />
 <x-home.governorates />
 <livewire:rating-widget />
+<livewire:comment-widget />
 <section class="container mx-auto px-4 py-28">
     <x-contact.form />
 </section>
