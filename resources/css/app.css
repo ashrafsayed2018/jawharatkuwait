@@ -39,4 +39,8 @@
     .post-content li {
         @apply mt-2;
     }
+
+    .post-content a {
+        @apply text-primary underline underline-offset-2 hover:text-primary/80 transition-colors duration-150;
+    }
 }
