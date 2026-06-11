@@ -5,7 +5,7 @@
     <div class="relative overflow-hidden" style="height:500px;">
         @if($image)
             <img src="{{ $image }}"
-                 class="w-full h-full object-cover"
+                 class="w-full h-full object-contain"
                  loading="lazy"
                  alt="{{ $title }}">
             <div class="absolute inset-0 bg-linear-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
