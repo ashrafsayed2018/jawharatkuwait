@@ -15,7 +15,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="gallery-grid">
             @forelse($images as $image)
                 <div class="relative group overflow-hidden rounded-lg shadow-lg cursor-pointer transition-transform duration-300 hover:scale-[1.02]" onclick="openLightbox('{{ asset($image->image_path) }}', '{{ $image->title }}')">
-                    <img src="{{ asset($image->image_path) }}" alt="{{ $image->title }}" class="w-full object-cover transform transition-transform duration-500 group-hover:scale-110" style="height:500px;">
+                    <img src="{{ asset($image->image_path) }}" alt="{{ $image->title }}" class="w-full object-fill transform transition-transform duration-500 group-hover:scale-110" style="height:500px;">
                     <div class="absolute inset-0 group-hover:bg-opacity-30 transition-opacity duration-300 flex items-center justify-center">
                         <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
