@@ -6,7 +6,7 @@
    class="group relative flex flex-col bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
     
     <!-- Image Container with Overlay -->
-    <div class="relative h-96 overflow-hidden bg-white">
+    <div class="relative overflow-hidden bg-white" style="aspect-ratio:4/3;">
         <!-- Image -->
         <img src="{{ $src }}" 
              class="w-full h-full object-fill transition-transform duration-700 group-hover:scale-110" 

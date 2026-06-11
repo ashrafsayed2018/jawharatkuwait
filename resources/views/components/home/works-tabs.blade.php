@@ -109,7 +109,7 @@
             @foreach($groups as $idx => $g)
                 <div class="tab-panel grid md:grid-cols-4 gap-4" data-panel="{{ $idx }}" style="{{ $idx === 0 ? '' : 'display:none' }}">
                     @foreach(array_slice($g['images'], 0, 4) as $img)
-                        <img src="{{ asset($img) }}" class="w-full h-96 object-cover rounded-xl"
+                        <img src="{{ asset($img) }}" class="w-full object-cover rounded-xl" style="aspect-ratio:4/3;"
                              loading="lazy" alt="{{ pathinfo($img, PATHINFO_FILENAME) }}">
                     @endforeach
                 </div>

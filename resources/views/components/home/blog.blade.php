@@ -5,7 +5,7 @@
         @foreach($posts as $post)
             <a href="{{ route('post.show',$post->slug) }}" class="rounded border overflow-hidden hover:shadow-md transition">
                 @if($post->image)
-                    <img src="{{ asset($post->image) }}" class="w-full h-96 object-cover" alt="">
+                    <img src="{{ asset($post->image) }}" class="w-full object-cover" style="aspect-ratio:4/3;" alt="">
                 @endif
                 <div class="p-4">
                     <div class="font-semibold">{{ $post->title }}</div>
