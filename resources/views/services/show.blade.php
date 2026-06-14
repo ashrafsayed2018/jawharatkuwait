@@ -250,7 +250,7 @@
                    class="group relative flex flex-col bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
                     
                     @if($post->image)
-                        <div class="relative h-56 overflow-hidden bg-gray-100">
+                        <div class="relative overflow-hidden bg-gray-100" style="height:500px;">
                             <img src="{{ $post->image }}" 
                              class="w-full h-full object-fill transition-transform duration-700 group-hover:scale-110" 
              loading="lazy"
