@@ -35,6 +35,21 @@
                 <input type="file" name="images[]" id="images" multiple class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required accept="image/*">
                 <p class="text-sm text-gray-500 mt-1">الحد الأقصى 5 ميجابايت لكل صورة. الصيغ المدعومة: jpeg, png, jpg, gif</p>
             </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">
+                    ربط الصور بالخدمات (اختياري، تُطبّق على كل الصور المرفوعة)
+                </label>
+                <div class="flex flex-wrap gap-3 border rounded p-3">
+                    @forelse($services as $service)
+                        <label class="flex items-center gap-2 text-sm text-gray-700">
+                            <input type="checkbox" name="services[]" value="{{ $service->id }}" class="rounded">
+                            {{ $service->title }}
+                        </label>
+                    @empty
+                        <p class="text-sm text-gray-400">لا توجد خدمات مضافة بعد.</p>
+                    @endforelse
+                </div>
+            </div>
             <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300">
                 رفع الصور
             </button>
@@ -48,8 +63,14 @@
                 <img src="{{ asset($image->image_path) }}" alt="{{ $image->title }}" class="w-full h-48 object-cover">
                 <div class="p-4">
                     <p class="text-sm text-gray-600 truncate" title="{{ $image->title }}">{{ $image->title }}</p>
+                    <p class="text-xs text-gray-400 mt-1 truncate" title="{{ $image->services->pluck('title')->implode('، ') }}">
+                        {{ $image->services->isNotEmpty() ? $image->services->pluck('title')->implode('، ') : 'بدون خدمة مرتبطة' }}
+                    </p>
+                    <button type="button" onclick="document.getElementById('services-modal-{{ $image->id }}').classList.remove('hidden')" class="text-xs text-blue-600 hover:text-blue-800 mt-1">
+                        تعديل الخدمات
+                    </button>
                 </div>
-                
+
                 <!-- Delete Button (Overlay) -->
                 <div class="absolute top-2 left-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <form action="{{ route('admin.gallery.destroy', $image) }}" method="POST" onsubmit="return confirm('هل أنت متأكد من حذف هذه الصورة؟');">
@@ -60,6 +81,36 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                             </svg>
                         </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Edit Services Modal -->
+            <div id="services-modal-{{ $image->id }}" class="hidden fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4">
+                <div class="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
+                    <h3 class="text-lg font-bold mb-4">تعديل الخدمات المرتبطة بالصورة</h3>
+                    <form action="{{ route('admin.gallery.update', $image) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <div class="flex flex-wrap gap-3 border rounded p-3 mb-4 max-h-64 overflow-y-auto">
+                            @forelse($services as $service)
+                                <label class="flex items-center gap-2 text-sm text-gray-700">
+                                    <input type="checkbox" name="services[]" value="{{ $service->id }}" class="rounded"
+                                           {{ $image->services->contains($service->id) ? 'checked' : '' }}>
+                                    {{ $service->title }}
+                                </label>
+                            @empty
+                                <p class="text-sm text-gray-400">لا توجد خدمات مضافة بعد.</p>
+                            @endforelse
+                        </div>
+                        <div class="flex justify-end gap-2">
+                            <button type="button" onclick="document.getElementById('services-modal-{{ $image->id }}').classList.add('hidden')" class="px-4 py-2 rounded text-gray-600 hover:bg-gray-100">
+                                إلغاء
+                            </button>
+                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                حفظ
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>

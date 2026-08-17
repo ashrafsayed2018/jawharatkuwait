@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Gallery;
+use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -11,29 +12,48 @@ class GalleryController extends Controller
 {
     public function index()
     {
-        $images = Gallery::latest()->paginate(20);
-        return view('admin.gallery.index', compact('images'));
+        $images = Gallery::with('services')->latest()->paginate(20);
+        $services = Service::orderBy('title')->get();
+        return view('admin.gallery.index', compact('images', 'services'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'images.*' => ['required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:5120'], // 5MB max
+            'services' => ['nullable', 'array'],
+            'services.*' => ['exists:services,id'],
         ]);
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
                 $path = $image->store('uploads/gallery', 'public');
                 $this->compressImage(storage_path('app/public/'.$path));
-                
-                Gallery::create([
+
+                $gallery = Gallery::create([
                     'image_path' => '/storage/' . $path,
                     'title' => pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME),
                 ]);
+
+                if ($request->filled('services')) {
+                    $gallery->services()->sync($request->input('services'));
+                }
             }
         }
 
         return redirect()->route('admin.gallery.index')->with('success', 'Images uploaded successfully.');
+    }
+
+    public function update(Request $request, Gallery $gallery)
+    {
+        $request->validate([
+            'services' => ['nullable', 'array'],
+            'services.*' => ['exists:services,id'],
+        ]);
+
+        $gallery->services()->sync($request->input('services', []));
+
+        return redirect()->route('admin.gallery.index')->with('success', 'تم تحديث الخدمات المرتبطة بالصورة.');
     }
 
     public function destroy(Gallery $gallery)

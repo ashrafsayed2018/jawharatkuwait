@@ -52,7 +52,7 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::get('messages/{message}/toggle-read', [AdminContactMessageController::class, 'toggleRead'])->name('messages.toggleRead');
     Route::get('messages/export', [AdminContactMessageController::class, 'export'])->name('messages.export');
     Route::resource('settings', AdminSettingController::class)->only(['index', 'create', 'store', 'edit', 'update']);
-    Route::resource('gallery', AdminGalleryController::class)->only(['index', 'store', 'destroy']);
+    Route::resource('gallery', AdminGalleryController::class)->only(['index', 'store', 'update', 'destroy']);
     Route::resource('tags', AdminTagController::class)->except(['show', 'create', 'edit']); // Using modal/inline for edit
     Route::resource('users', UserController::class);
     Route::resource('roles', RoleController::class);
