@@ -12,22 +12,25 @@
             <div class="w-24 h-1 bg-primary mx-auto mt-4"></div>
         </div>
 
-        <form action="{{ route('gallery.index') }}" method="GET" class="max-w-xl mx-auto mb-10">
-            <div class="relative">
-                <input type="text" name="search" value="{{ $search }}" placeholder="ابحث عن صورة..."
-                       class="w-full py-3 ps-12 pe-4 rounded-xl border border-gray-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-gray-700">
-                <div class="absolute inset-y-0 start-0 flex items-center ps-4 pointer-events-none text-gray-400">
+        <form action="{{ route('gallery.index') }}" method="GET" class="max-w-xl mx-auto mb-12 px-4 sm:px-0">
+            <div class="relative flex items-center bg-white rounded-2xl shadow-lg border border-gray-100 focus-within:ring-2 focus-within:ring-primary transition-all duration-300">
+                <div class="flex items-center justify-center ps-5 text-gray-400 shrink-0">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
                 </div>
+                <input type="text" name="search" value="{{ $search }}" placeholder="ابحث عن صورة..."
+                       class="w-full py-4 px-3 bg-transparent rounded-2xl focus:outline-none text-gray-700 placeholder:text-gray-400">
                 @if($search)
-                    <a href="{{ route('gallery.index') }}" class="absolute inset-y-0 end-0 flex items-center pe-4 text-gray-400 hover:text-gray-600">
+                    <a href="{{ route('gallery.index') }}" class="flex items-center justify-center pe-5 text-gray-400 hover:text-gray-600 shrink-0">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                         </svg>
                     </a>
                 @endif
+                <button type="submit" class="me-1.5 my-1.5 px-6 py-2.5 rounded-xl font-medium text-sm text-white bg-linear-to-r from-primary to-green-500 hover:shadow-md transition-all duration-300 shrink-0">
+                    بحث
+                </button>
             </div>
         </form>
 
