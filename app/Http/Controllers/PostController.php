@@ -18,7 +18,6 @@ class PostController extends Controller
             $posts = Post::with('gallery')
                 ->where(function ($query) use ($search) {
                     $query->where('title', 'like', '%' . $search . '%')
-                        ->orWhere('content', 'like', '%' . $search . '%')
                         ->orWhere('meta_description', 'like', '%' . $search . '%');
                 })
                 ->latest()
