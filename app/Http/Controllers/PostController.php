@@ -4,16 +4,32 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\Tag;
+use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Cache;
 
 class PostController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $page = Paginator::resolveCurrentPage() ?: 1;
-        $posts = Cache::remember("posts_index_page_{$page}", 300, fn() => Post::with('gallery')->latest()->paginate(10));
-        return view('blog.index', compact('posts'));
+        $search = $request->input('search');
+
+        if ($search) {
+            $posts = Post::with('gallery')
+                ->where(function ($query) use ($search) {
+                    $query->where('title', 'like', '%' . $search . '%')
+                        ->orWhere('content', 'like', '%' . $search . '%')
+                        ->orWhere('meta_description', 'like', '%' . $search . '%');
+                })
+                ->latest()
+                ->paginate(10)
+                ->withQueryString();
+        } else {
+            $page = Paginator::resolveCurrentPage() ?: 1;
+            $posts = Cache::remember("posts_index_page_{$page}", 300, fn() => Post::with('gallery')->latest()->paginate(10));
+        }
+
+        return view('blog.index', compact('posts', 'search'));
     }
 
     public function tag($slug)
