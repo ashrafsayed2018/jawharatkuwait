@@ -20,6 +20,7 @@ class PostController extends Controller
                     $query->where('title', 'like', '%' . $search . '%')
                         ->orWhere('meta_description', 'like', '%' . $search . '%');
                 })
+                ->orderByRaw('title LIKE ? DESC', ['%' . $search . '%'])
                 ->latest()
                 ->paginate(10)
                 ->withQueryString();
