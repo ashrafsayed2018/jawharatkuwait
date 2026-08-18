@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Service;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
@@ -10,7 +11,8 @@ class ServiceController extends Controller
 {
     public function index()
     {
-        $services = Cache::remember('services_index', 300, fn() => Service::where('is_active', true)->latest()->paginate(12));
+        $page = Paginator::resolveCurrentPage() ?: 1;
+        $services = Cache::remember("services_index_page_{$page}", 300, fn() => Service::where('is_active', true)->latest()->paginate(12));
         return view('services.index', compact('services'));
     }
 

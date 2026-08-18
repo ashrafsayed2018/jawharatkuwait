@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\Tag;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Cache;
 
 class PostController extends Controller
 {
     public function index()
     {
-        $posts = Cache::remember('posts_index', 300, fn() => Post::with('gallery')->latest()->paginate(10));
+        $page = Paginator::resolveCurrentPage() ?: 1;
+        $posts = Cache::remember("posts_index_page_{$page}", 300, fn() => Post::with('gallery')->latest()->paginate(10));
         return view('blog.index', compact('posts'));
     }
 
