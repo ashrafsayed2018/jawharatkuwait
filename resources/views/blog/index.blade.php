@@ -54,7 +54,7 @@
                 :title="$post->title"
                 :image="asset($post->image)"
                 :excerpt="$post->meta_description ?? Str::limit(strip_tags($post->content), 100)"
-                :date="($post->published_at ?? $post->created_at)->translatedFormat('d M Y')"
+                :date="($post->published_at ?? $post->created_at)->toArabicDate()"
             />
         @empty
             <div class="col-span-full text-center py-20">

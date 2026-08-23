@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Carbon\Carbon;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\View;
@@ -33,5 +34,12 @@ class AppServiceProvider extends ServiceProvider
             return Str::slug($value);
         });
         View::share('siteSettings', Cache::remember('site_settings', 300, fn() => Setting::first()));
+
+        Carbon::macro('toArabicDate', function (string $format = 'j F Y') {
+            /** @var Carbon $this */
+            $formatted = $this->locale('ar')->translatedFormat($format);
+            $arabicDigits = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+            return strtr($formatted, array_combine(range(0, 9), $arabicDigits));
+        });
     }
 }
