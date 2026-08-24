@@ -5,6 +5,14 @@
     <div class="text-center mb-10">
         <h1 class="text-3xl md:text-4xl font-bold text-gray-900">المدونة</h1>
         <p class="text-gray-500 mt-2">أحدث المقالات والأخبار حول خدماتنا وفعالياتنا</p>
+        @unless($search)
+            <span class="inline-flex items-center gap-1.5 mt-4 bg-primary/10 text-primary text-sm font-medium px-4 py-1.5 rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 12h6v4" />
+                </svg>
+                {{ $posts->total() }} مقالة
+            </span>
+        @endunless
     </div>
 
     <form action="{{ route('blog.index') }}" method="GET" class="max-w-2xl mx-auto mb-12">
