@@ -60,8 +60,8 @@ class Post extends Model
     {
         parent::boot();
         static::saving(function ($model) {
-            if (!$model->slug) {
-                $model->slug = Str::arabicSlug($model->title);
+            if (!$model->slug || $model->isDirty('title')) {
+                $model->slug = static::uniqueSlugFor($model->title, $model->id);
             }
             if (!$model->meta_title) {
                 $model->meta_title = $model->title;
@@ -73,5 +73,22 @@ class Post extends Model
                 $model->tags = collect(explode(',', $model->tags))->map(fn($t) => trim($t))->filter()->values()->all();
             }
         });
+    }
+
+    protected static function uniqueSlugFor(string $title, ?int $ignoreId = null): string
+    {
+        $base = Str::arabicSlug($title);
+        $slug = $base;
+        $suffix = 2;
+
+        while (static::withTrashed()
+            ->where('slug', $slug)
+            ->when($ignoreId, fn($query) => $query->where('id', '!=', $ignoreId))
+            ->exists()) {
+            $slug = $base . '-' . $suffix;
+            $suffix++;
+        }
+
+        return $slug;
     }
 }
