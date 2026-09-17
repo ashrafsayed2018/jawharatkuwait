@@ -10,8 +10,8 @@
             
             tinymce.init({
                 selector: 'textarea#content',
-                plugins: 'image link lists media table code directionality',
-                toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright alignjustify | indent outdent | bullist numlist | link image | rtl ltr | code',
+                plugins: 'image link lists media table code directionality searchreplace',
+                toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright alignjustify | indent outdent | bullist numlist | link image | rtl ltr | searchreplace | code',
                 directionality: 'rtl',
                 image_list: @json($imageList),
                 height: 500,

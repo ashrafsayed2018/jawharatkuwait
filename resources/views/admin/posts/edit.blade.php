@@ -352,4 +352,6 @@ function clearGallerySelection() {
     document.querySelector('#image_preview img').src = '';
 }
 </script>
+
+<x-backend.admin.tinymce-config />
 @endsection
