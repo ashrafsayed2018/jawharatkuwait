@@ -34,7 +34,7 @@
             </div>
         </div>
 
-        @php($whatsapp = \App\Models\Setting::where('key','whatsapp')->value('value') ?: '50850173')
+        @php($whatsapp = $siteSettings->whatsapp_number ?? '50850173')
         
         {{-- @if($services->isNotEmpty()) --}}
             <!-- Services Grid -->

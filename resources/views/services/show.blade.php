@@ -140,8 +140,8 @@
 
                 <!-- CTA Buttons -->
                 <div class="flex flex-wrap gap-4 pt-4">
-                    @php($phone = \App\Models\Setting::where('key','phone')->value('value') ?: '50850173')
-                    @php($whatsapp = \App\Models\Setting::where('key','whatsapp')->value('value') ?: '50850173')
+                    @php($phone = $siteSettings->phone_number ?? '50850173')
+                    @php($whatsapp = $siteSettings->whatsapp_number ?? '50850173')
                     
                     <a href="tel:{{ $phone }}" 
                        class="group relative inline-flex items-center gap-3 px-6 py-4 rounded-xl font-bold overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-xl flex-1 sm:flex-none">
@@ -303,7 +303,7 @@
   'name' => 'جوهرة الكويت',
   'description' => $service->short_description,
   'url' => url()->current(),
-  'telephone' => \App\Models\Setting::where('key','phone')->value('value') ?: '50850173',
+  'telephone' => $siteSettings->phone_number ?? '50850173',
   'areaServed' => 'Kuwait',
   'image' => $service->image,
 ], JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES) !!}
